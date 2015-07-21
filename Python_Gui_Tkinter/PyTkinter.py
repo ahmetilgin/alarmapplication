@@ -8,8 +8,14 @@ from tkinter import *
 from signal import alarm
 import time
 from datetime import date, datetime
+from time import sleep
+from threading import Thread
+from test.support import args_from_interpreter_flags
 
-    
+
+
+
+kapalimi=1
 pencere = Tk()   #pencereyi oluştur
 pencere.title("Alarm") #başlığı Alarm yap
 pencere.tk_setPalette("black")
@@ -26,40 +32,30 @@ saatGirisi.place(x=50,y=5)
 dakikaGirisi=Entry()
 dakikaGirisi.pack()   
 dakikaGirisi.place(x=50,y=55)
-  
+def alarmCal(alarmiminDakikasi,alarmiminSaati):
+    
+    while True:
+        print("Alarmaaaaa")
+        print(alarmiminDakikasi)
+        sleep(3)
+        if alarmiminSaati == time.strftime("%H"):
+                print("ALARM")
+    
 
-def alarm(hangiSaat,hangiDakika):
-    time.sleep(1)
-    suAnkiSaat=time.strftime("%H")
-    suAnkiDakika=time.strftime("%M")
-    print("Kurulan Saat : "
-          + hangiSaat 
-          +"Kurulan Dakika : "
-          +hangiDakika
-          +" Su an ki dakika : "
-          +suAnkiDakika
-          +"Su an ki saat"
-          +suAnkiSaat
-          )
-    if(hangiSaat)==suAnkiSaat and hangiDakika==suAnkiDakika:
-        print("ALARM ALARM")
         
-    alarm(hangiSaat,hangiDakika)
-   
+    
+
 def kur():
     saatStr=saatGirisi.get()
     dakikaStr=dakikaGirisi.get()
     alarmSaati=int(saatStr)
     alarmDakikasi=int(dakikaStr)
-    print(alarmDakikasi)
-    print(alarmSaati)
-    alarm(alarmSaati, alarmDakikasi)
-    
-
-
-
+    a=Thread(target=alarmCal,args =(alarmSaati, alarmSaati))
+    a.start()
 def kapat():
-    exit()
+    kapalimi=0
+
+
 alarmKur=Button(text="Kur"
                 ,command=kur
                 ,relief="flat"
